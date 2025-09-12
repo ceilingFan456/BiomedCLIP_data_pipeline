@@ -29,9 +29,9 @@ with src.open("r", encoding="utf-8") as fin, \
         h = int(hashlib.md5(pmcid.encode("utf-8")).hexdigest()[:8], 16) % 100
 
         # 95% train, 2% dev, 3% test (adjust if you prefer 95/2.5/2.5)
-        if h < 95:
+        if h < 97:
             ftr.write(line)
-        elif h < 97:
+        elif h < 98:
             fdv.write(line)
         else:
             fte.write(line)

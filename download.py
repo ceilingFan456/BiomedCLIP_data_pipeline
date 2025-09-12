@@ -1,5 +1,14 @@
 MAX_ITEMS_TO_PROCESS = 100
 
+
+#    7180727 /home/azureuser/BiomedCLIP_data_pipeline/_results/data/pubmed_open_access_file_list.txt
+#    6964931 /home/azureuser/BiomedCLIP_data_pipeline/_results/data/pubmed_open_access_file_list_train.txt
+#      71863 /home/azureuser/BiomedCLIP_data_pipeline/_results/data/pubmed_open_access_file_list_dev.txt
+#     143935 /home/azureuser/BiomedCLIP_data_pipeline/_results/data/pubmed_open_access_file_list_test.txt
+
+
+
+
 from pmc15_pipeline import data
 from pmc15_pipeline.utils import fs_utils
 
