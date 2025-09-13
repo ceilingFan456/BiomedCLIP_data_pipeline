@@ -494,18 +494,20 @@ def run_dev_and_test(
     """
     images_root = out_root / "images"
     # dev
-    build_pubmed_image_caption_dataset_streaming(
-        file_list_path=dev_list,
-        jsonl_out_path=out_root / "dev.jsonl",
-        images_out_dir=images_root / "dev",
-        resume=True,
-        use_dual_base=True,
-    )
+    if dev_list:
+        build_pubmed_image_caption_dataset_streaming(
+            file_list_path=dev_list,
+            jsonl_out_path=out_root / "dev.jsonl",
+            images_out_dir=images_root / "dev",
+            resume=True,
+            use_dual_base=True,
+        )
     # test
-    build_pubmed_image_caption_dataset_streaming(
-        file_list_path=test_list,
-        jsonl_out_path=out_root / "test.jsonl",
-        images_out_dir=images_root / "test",
+    if test_list:
+        build_pubmed_image_caption_dataset_streaming(
+            file_list_path=test_list,
+            jsonl_out_path=out_root / "test.jsonl",
+            images_out_dir=images_root / "test",
         resume=True,
         use_dual_base=True,
     )
@@ -546,14 +548,14 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Build PMC15 CC12M-like dataset (dev/test/shards).")
     parser.add_argument("--mode", choices=["devtest", "shards"], required=True)
-    parser.add_argument("--dev_list", type=Path, help="TSV list for dev split")
-    parser.add_argument("--test_list", type=Path, help="TSV list for test split")
+    parser.add_argument("--dev_list", type=Path, help="TSV list for dev split", required=False)
+    parser.add_argument("--test_list", type=Path, help="TSV list for test split", required=False)
     parser.add_argument("--shard_dir", type=Path, help="Directory containing train shard TSVs")
     parser.add_argument("--out_root", type=Path, default=repo_root / "_results/data/pmc15_cc12m_like")
     args = parser.parse_args()
 
     if args.mode == "devtest":
-        assert args.dev_list and args.test_list, "Provide --dev_list and --test_list"
+        assert args.dev_list or args.test_list, "Provide --dev_list or --test_list"
         run_dev_and_test(args.dev_list, args.test_list, args.out_root)
     else:
         assert args.shard_dir and args.shard_dir.is_dir(), "Provide --shard_dir"
