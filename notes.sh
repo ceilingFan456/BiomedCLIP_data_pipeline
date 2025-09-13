@@ -18,3 +18,23 @@ python make_webdataset_shards.py \
 
 mkdir -p /mnt/data/pmc/{train,dev,test}/{compressed,extracted,logs}
 
+
+python process.py \
+  --mode devtest \
+  --dev_list  /home/azureuser/disk/_results/data/pubmed_open_access_file_list_dev.txt \
+  --test_list /home/azureuser/disk/_results/data/pubmed_open_access_file_list_test.txt \
+  --out_root  /home/azureuser/disk/_results/data/pmc15_cc12m_like
+
+
+python process.py \
+  --mode shards \
+  --shard_dir /home/azureuser/disk/_results/data/shards_train \
+  --out_root  /home/azureuser/disk/_results/data/pmc15_cc12m_like
+
+
+python process_parallel.py \
+  --mode shards \
+  --shard_dir /home/azureuser/disk/_results/data/shards_train \
+  --out_root  /home/azureuser/disk/_results/data/pmc15_cc12m_like \
+  --num_workers 8
+
